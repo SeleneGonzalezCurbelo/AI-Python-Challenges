@@ -19,6 +19,13 @@ Anomaly detection in environmental sensors using Isolation Forest and Local Outl
 - Time series extension with gradual drift detection
 - Comparison of IF, LOF, and Median+MAD approaches
 
+### 03-text-classification
+Automatic classification of citizen incident messages (lighting, cleaning, transport, water supply) using Bag of Words (BoW) and TF-IDF with LogisticRegression. Includes:
+- Synthetic reproducible Spanish dataset of citizen messages
+- Text representation with unigrams and bigrams
+- Comparison of BoW vs TF-IDF classifiers on the same partitions
+- Evaluation via macro-F1, confusion matrices, and per-class errors
+- Analysis of generalization limits on unseen expressions
 ## Installation
 
 1. Clone the repository:
@@ -47,6 +54,11 @@ python solution.py
 python solution_timeseries.py
 ```
 
+### Challenge 03: Text Classification
+```bash
+cd 03-text-classification
+python solution.py
+```
 ## Screenshots
 
 ### Challenge 01: Territorial Clustering
@@ -60,7 +72,7 @@ python solution_timeseries.py
 
 - [x] Challenge 01: Territorial Clustering (K-Means)
 - [x] Challenge 02: Anomaly Detection (Isolation Forest, LOF)
-
+- [ ] Challenge 03: Text Classification (BoW, TF-IDF)
 ## Contributing
 
 1. Fork the repository
@@ -93,6 +105,10 @@ AI-Python-Challenges/
 │       ├── results.csv
 │       ├── timeseries_plot.png
 │       └── timeseries_results.csv
+├── 03-text-classification/
+│   ├── README.md
+│   ├── solution.py
+│   └── results/
 ```
 
 **Exclude from upload:**

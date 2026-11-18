@@ -1,0 +1,5 @@
+split,model,macro_f1
+random,BoW,1.0
+random,TF-IDF,1.0
+group,BoW,0.4453125
+group,TF-IDF,0.22288359788359788
