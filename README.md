@@ -5,7 +5,7 @@
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
 
-A collection of Python-based machine learning challenges focused on unsupervised learning, anomaly detection, and data analysis.
+A collection of Python-based AI challenges focused on unsupervised learning, anomaly detection, text classification, and informed search.
 
 ## Challenges
 
@@ -26,6 +26,16 @@ Automatic classification of citizen incident messages (lighting, cleaning, trans
 - Comparison of BoW vs TF-IDF classifiers on the same partitions
 - Evaluation via macro-F1, confusion matrices, and per-class errors
 - Analysis of generalization limits on unseen expressions
+
+### 04-pathfinding-algorithms
+Informed search and route planning on a synthetic grid. A maintenance vehicle travels from its base to an incident through a road network with blocked roads and variable circulation costs. Includes:
+- Reproducible synthetic 7x7 grid with obstacles and variable movement costs
+- From-scratch implementation of Dijkstra (uninformed) and A* (informed) using a priority queue
+- Admissible and consistent heuristic design
+- Comparison of path cost and number of explored nodes
+- Analysis of when a heuristic improves efficiency
+- Dynamic replanning simulation with 10 successive blockages
+- D* Lite investigation for incremental replanning
 ## Installation
 
 1. Clone the repository:
@@ -59,6 +69,12 @@ python solution_timeseries.py
 cd 03-text-classification
 python solution.py
 ```
+
+### Challenge 04: Pathfinding Algorithms
+```bash
+cd 04-pathfinding-algorithms
+python solution.py
+```
 ## Screenshots
 
 ### Challenge 01: Territorial Clustering
@@ -72,7 +88,9 @@ python solution.py
 
 - [x] Challenge 01: Territorial Clustering (K-Means)
 - [x] Challenge 02: Anomaly Detection (Isolation Forest, LOF)
-- [ ] Challenge 03: Text Classification (BoW, TF-IDF)
+- [X] Challenge 03: Text Classification (BoW, TF-IDF)
+- [ ] Challenge 04: Pathfinding Algorithms (Dijkstra, A*)
+- [ ] Next proposed challenge: 05-neural-network-from-scratch - implement a multilayer neural network using only NumPy, including forward propagation, backpropagation, gradient descent, and numerical gradient checking.
 ## Contributing
 
 1. Fork the repository
@@ -106,6 +124,10 @@ AI-Python-Challenges/
 │       ├── timeseries_plot.png
 │       └── timeseries_results.csv
 ├── 03-text-classification/
+│   ├── README.md
+│   ├── solution.py
+│   └── results/
+├── 04-pathfinding-algorithms/
 │   ├── README.md
 │   ├── solution.py
 │   └── results/
