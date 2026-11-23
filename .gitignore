@@ -6,10 +6,17 @@ __pycache__/
 .Python
 env/
 venv/
+.venv/
 ENV/
 *.egg-info/
 dist/
 build/
+
+# Testing and coverage
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 
 # IDE
 .vscode/
@@ -20,7 +27,3 @@ build/
 # OS
 .DS_Store
 Thumbs.db
-
-# Results (optional - keep if you want to track generated plots)
-# results/*.png
-# results/*.csv

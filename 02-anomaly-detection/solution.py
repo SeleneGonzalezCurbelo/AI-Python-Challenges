@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -12,6 +14,9 @@ from sklearn.metrics import (
 
 SEED = 42
 rng = np.random.default_rng(SEED)
+
+RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+os.makedirs(RESULTS_DIR, exist_ok=True)
 
 FEATURES = ["temperature", "humidity", "pm25", "co2"]
 
@@ -127,7 +132,7 @@ results_df = pd.DataFrame(X_test, columns=FEATURES)
 results_df['pred_if'] = pred_if
 results_df['pred_lof'] = pred_lof
 results_df['true_label'] = y_test
-results_df.to_csv('E:/Proyectos/AI-Python-Challenges/02-anomaly-detection/results/results.csv', index=False)
+results_df.to_csv(os.path.join(RESULTS_DIR, "results.csv"), index=False)
 
 # Plot anomalies
 fig, axes = plt.subplots(1, 2, figsize=(12, 5))
@@ -145,7 +150,7 @@ axes[1].set_xlabel('Temperature (scaled)')
 axes[1].set_ylabel('PM2.5 (scaled)')
 
 plt.tight_layout()
-plt.savefig('E:/Proyectos/AI-Python-Challenges/02-anomaly-detection/results/anomalies_plot.png')
+plt.savefig(os.path.join(RESULTS_DIR, "anomalies_plot.png"))
 plt.close()
 
 print("Results and plot saved to results folder.")

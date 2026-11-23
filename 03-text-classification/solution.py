@@ -18,6 +18,9 @@ RANDOM_STATE = 42
 random.seed(RANDOM_STATE)
 np.random.seed(RANDOM_STATE)
 
+RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+os.makedirs(RESULTS_DIR, exist_ok=True)
+
 CATEGORIES = [
     "Alumbrado público",
     "Limpieza",
@@ -178,7 +181,7 @@ def main():
             ],
         }
     )
-    comparison_groups.to_csv("results/metrics_groups.csv", index=False)
+    comparison_groups.to_csv(os.path.join(RESULTS_DIR, "metrics_groups.csv"), index=False)
     print(comparison_groups.to_string(index=False))
 
     print("=== BoW (CountVectorizer + LogisticRegression) ===")
@@ -198,8 +201,7 @@ def main():
             "macro_f1": [bow_results["macro_f1"], tfidf_results["macro_f1"]],
         }
     )
-    os.makedirs("results", exist_ok=True)
-    comparison.to_csv("results/metrics.csv", index=False)
+    comparison.to_csv(os.path.join(RESULTS_DIR, "metrics.csv"), index=False)
 
     # Confusion matrices
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))
@@ -220,7 +222,7 @@ def main():
             for j in range(len(CATEGORIES)):
                 ax.text(j, i, cm[i, j], ha="center", va="center", color="black")
     fig.tight_layout()
-    fig.savefig("results/confusion_matrices.png", dpi=120)
+    fig.savefig(os.path.join(RESULTS_DIR, "confusion_matrices.png"), dpi=120)
     plt.close(fig)
 
     # Out-of-template messages with expected labels

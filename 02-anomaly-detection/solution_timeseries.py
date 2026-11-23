@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -8,6 +10,9 @@ from sklearn.preprocessing import RobustScaler
 
 SEED = 42
 rng = np.random.default_rng(SEED)
+
+RESULTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "results")
+os.makedirs(RESULTS_DIR, exist_ok=True)
 
 N_HOURS = 30 * 24  # 720 hours
 FEATURES = ["temperature", "humidity", "pm25", "co2"]
@@ -156,7 +161,7 @@ print("For gradual drift, a fixed baseline comparison or cumulative sum (CUSUM) 
 
 # Save results
 res_df = pd.DataFrame(results)
-res_df.to_csv('E:/Proyectos/AI-Python-Challenges/02-anomaly-detection/results/timeseries_results.csv', index=False)
+res_df.to_csv(os.path.join(RESULTS_DIR, "timeseries_results.csv"), index=False)
 
 # Plot
 fig, axes = plt.subplots(3, 1, figsize=(14, 10), sharex=True)
@@ -182,7 +187,7 @@ axes[2].legend()
 
 plt.xlabel('Hour')
 plt.tight_layout()
-plt.savefig('E:/Proyectos/AI-Python-Challenges/02-anomaly-detection/results/timeseries_plot.png')
+plt.savefig(os.path.join(RESULTS_DIR, "timeseries_plot.png"))
 plt.close()
 
 print("\nTime series results and plot saved.")
