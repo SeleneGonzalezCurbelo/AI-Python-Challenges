@@ -1,0 +1,5 @@
+strategy,cost
+all_negative,540000
+threshold_0.5,244000
+theoretical_threshold_0.03846,139400
+tuned_threshold_0.0350,143000

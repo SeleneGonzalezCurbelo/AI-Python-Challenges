@@ -1,0 +1,6 @@
+strategy,cost
+baseline_always_normal,540000
+uncalibrated_threshold_0.5,130800
+calibrated_threshold_0.5,193000
+calibrated_threshold_0.04300,113400
+calibrated_theoretical_0.03846,111400

@@ -19,6 +19,7 @@ Developed and tested with **Python 3.11.18** (NumPy 2.4.6, pandas 3.1.1, Matplot
 | 04 - Pathfinding | A* matches Dijkstra's cost (98) with 309 vs 322 explored nodes; replanning 568 vs 784 |
 | 05 - Neural Network From Scratch | Test F1 up to 0.9901; SGD/Adam converge faster than full-batch GD; gradient error < 1e-8 |
 | 06 - Natural Language Inference | Three approaches (Jaccard baseline, TF-IDF + Logistic Regression, multilingual transformer) for premise-hypothesis entailment, contradiction and neutral |
+| 07 - Predictive Model Comparison | Imbalanced failure prediction with CV model selection, probability calibration, threshold tuning and business-cost evaluation |
 
 ## Challenges
 
@@ -72,6 +73,16 @@ Natural Language Inference (NLI) over Spanish premise-hypothesis pairs, classify
 - Group-based split by template and hand-written out-of-template pairs for generalization
 - RAG-style verification demo for generated answers against documentation premises
 
+### 07-predictive-model-comparison
+Cost-sensitive prediction of rare industrial failures using an imbalanced synthetic sensor dataset. Includes:
+- 10,000 observations with approximately 5% positive cases
+- Logistic Regression, Random Forest and XGBoost with the specified initial parameters
+- Stratified 6,000 / 2,000 / 2,000 train, validation and test split
+- 5-fold cross-validation by Average Precision for model selection
+- Sigmoid calibration of the selected model
+- Validation threshold tuning to minimize business cost (5,000 € FN, 200 € FP)
+- Final test evaluation with PR curve, calibration curve and confusion matrix
+
 ## Installation
 
 1. Clone the repository:
@@ -98,6 +109,7 @@ cd ../03-text-classification && python solution.py
 cd ../04-pathfinding-algorithms && python solution.py
 cd ../05-neural-network-from-scratch && python solution.py
 cd ../06-natural-language-inference && python solution.py
+cd ../07-predictive-model-comparison && python solution.py
 ```
 
 All scripts resolve their `results/` directory relative to their own file, so they also work when invoked from another working directory. Detailed instructions are in each challenge's README.
@@ -133,6 +145,7 @@ All scripts resolve their `results/` directory relative to their own file, so th
 - [x] Challenge 04: Pathfinding Algorithms (Dijkstra, A*)
 - [x] Challenge 05: Neural Network From Scratch (MLP, NumPy, Backprop)
 - [ ] Challenge 06: Natural Language Inference (Jaccard, TF-IDF, Multilingual Transformer)
+- [ ] Challenge 07: Cost-Sensitive Maintenance (Logistic Regression, Random Forest, XGBoost)
 
 ## Repository Structure
 
@@ -187,6 +200,18 @@ AI-Python-Challenges/
         ├── metrics_groups.csv
         ├── predictions.csv
         └── verification_demo.csv
+└── 07-predictive-model-comparison/
+    ├── README.md
+    ├── solution.py
+    └── results/
+        ├── calibration.png
+        ├── confusion_matrix.png
+        ├── costs.csv
+        ├── cv_results.csv
+        ├── metrics.csv
+        ├── pr_curve.png
+        ├── thresholds.csv
+        └── validation_results.csv
 ```
 
 Generated `results/` artifacts are tracked so the documented output is visible on GitHub. Python caches and other temporary files are ignored through `.gitignore`.
