@@ -42,6 +42,7 @@ Artifacts are saved under `results/`:
 - `results/calibration.png`
 - `results/cost_vs_threshold.png`
 - `results/confusion_matrix.png`
+- `results/policy_comparison.csv` (fixed threshold, cost-optimized threshold, and capacity-limited economic prioritization)
 
 ## Requirements
 

@@ -1,0 +1,4 @@
+policy,cost,failures_detected,interventions,expected_benefit
+A_fixed_0.5,193000,70,85,289703.76959503547
+B_cost_optimized,113400,94,311,469683.40830156166
+C_economic_capacity,190800,71,100,323403.0318103187

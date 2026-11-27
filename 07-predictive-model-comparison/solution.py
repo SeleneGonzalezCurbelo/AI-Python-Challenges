@@ -181,6 +181,39 @@ def optimize_threshold(y_true, probabilities):
     return float(thresholds[best_index]), int(costs[best_index])
 
 
+def economic_benefit(probabilities):
+    probabilities = np.asarray(probabilities)
+    return probabilities * COST_FN - (1.0 - probabilities) * COST_FP
+
+
+def evaluate_policies(y_true, probabilities, threshold, capacity=100):
+    y_true = np.asarray(y_true)
+    benefits = economic_benefit(probabilities)
+    predictions = {
+        "A_fixed_0.5": (probabilities >= 0.5).astype(int),
+        "B_cost_optimized": (probabilities >= threshold).astype(int),
+    }
+
+    capacity_predictions = np.zeros_like(y_true, dtype=int)
+    eligible = np.where(benefits > 0)[0]
+    selected = eligible[np.argsort(benefits[eligible])[::-1][:capacity]]
+    capacity_predictions[selected] = 1
+    predictions["C_economic_capacity"] = capacity_predictions
+
+    rows = []
+    for name, pred in predictions.items():
+        rows.append(
+            {
+                "policy": name,
+                "cost": economic_cost(y_true, pred),
+                "failures_detected": int(np.sum((y_true == 1) & (pred == 1))),
+                "interventions": int(np.sum(pred)),
+                "expected_benefit": float(np.sum(benefits[pred == 1])),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
 empirical_threshold, validation_cost = optimize_threshold(y_val, val_prob_calibrated)
 theoretical_validation_cost = economic_cost(
     y_val, (val_prob_calibrated >= THEORETICAL_THRESHOLD).astype(int)
@@ -199,6 +232,11 @@ cost_05 = economic_cost(y_test, (test_prob_calibrated >= 0.5).astype(int))
 cost_calibrated_05 = economic_cost(y_test, (test_prob_calibrated >= 0.5).astype(int))
 cost_empirical = economic_cost(y_test, test_pred_calibrated)
 cost_theoretical = economic_cost(y_test, test_pred_theoretical)
+
+policy_df = evaluate_policies(
+    y_test, test_prob_calibrated, empirical_threshold, capacity=100
+)
+policy_df.to_csv(RESULTS_DIR / "policy_comparison.csv", index=False)
 
 # Save comparison results.
 comparison_df = pd.DataFrame(
@@ -319,6 +357,8 @@ print(f"Uncalibrated 0.5 cost: {economic_cost(y_test, (test_prob_raw >= 0.5).ast
 print(f"Calibrated 0.5 cost: {cost_calibrated_05}")
 print(f"Calibrated empirical cost: {cost_empirical}")
 print(f"Calibrated theoretical cost: {cost_theoretical}")
+print("\nPolicy comparison (capacity = 100):")
+print(policy_df.to_string(index=False))
 print("\nConfusion matrix:")
 print(cm)
 

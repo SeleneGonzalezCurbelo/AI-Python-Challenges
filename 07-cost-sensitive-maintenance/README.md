@@ -53,6 +53,7 @@ Artifacts are saved under `results/`:
 - `results/calibration.png`
 - `results/cost_vs_threshold.png`
 - `results/confusion_matrix.png`
+- `results/policy_comparison.csv` (fixed threshold, cost-optimized threshold, and capacity-limited economic prioritization)
 
 The tuned threshold substantially reduces business cost compared with predicting all negatives or using a 0.5 threshold.
 

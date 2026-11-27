@@ -99,6 +99,8 @@ def build_models(y_train):
         "Random Forest": RandomForestClassifier(
             n_estimators=150,
             max_depth=10,
+            min_samples_leaf=1,
+            max_features="sqrt",
             class_weight="balanced",
             random_state=SEED,
         ),
@@ -136,6 +138,39 @@ def tune_threshold(y_true, probabilities):
     costs = [business_cost(y_true, (probabilities >= t).astype(int)) for t in thresholds]
     best_index = int(np.argmin(costs))
     return float(thresholds[best_index]), int(costs[best_index])
+
+
+def economic_benefit(probabilities):
+    probabilities = np.asarray(probabilities)
+    return probabilities * COST_FALSE_NEGATIVE - (1.0 - probabilities) * COST_FALSE_POSITIVE
+
+
+def evaluate_policies(y_true, probabilities, threshold, capacity=100):
+    y_true = np.asarray(y_true)
+    benefits = economic_benefit(probabilities)
+    predictions = {
+        "A_fixed_0.5": (probabilities >= 0.5).astype(int),
+        "B_cost_optimized": (probabilities >= threshold).astype(int),
+    }
+
+    capacity_predictions = np.zeros_like(y_true, dtype=int)
+    eligible = np.where(benefits > 0)[0]
+    selected = eligible[np.argsort(benefits[eligible])[::-1][:capacity]]
+    capacity_predictions[selected] = 1
+    predictions["C_economic_capacity"] = capacity_predictions
+
+    rows = []
+    for name, pred in predictions.items():
+        rows.append(
+            {
+                "policy": name,
+                "cost": economic_cost(y_true, pred),
+                "failures_detected": int(np.sum((y_true == 1) & (pred == 1))),
+                "interventions": int(np.sum(pred)),
+                "expected_benefit": float(np.sum(benefits[pred == 1])),
+            }
+        )
+    return pd.DataFrame(rows)
 
 
 def main():
@@ -197,6 +232,11 @@ def main():
     test_metrics = evaluate_probabilities(y_test, test_prob, threshold=threshold)
     _ = evaluate_probabilities(y_test, test_prob_raw, threshold=0.5)
     test_cost_theoretical = business_cost(y_test, test_pred_theoretical)
+
+    policy_df = evaluate_policies(
+        y_test, test_prob, threshold, capacity=100
+    )
+    policy_df.to_csv(os.path.join(RESULTS_DIR, "policy_comparison.csv"), index=False)
 
     # Baselines.
     baseline_all_negative_cost = business_cost(y_test, np.zeros_like(y_test))
@@ -350,6 +390,8 @@ def main():
     print(f"Empirical threshold:   {threshold:.5f}")
     print(f"Theoretical test cost: {test_cost_theoretical}")
     print(f"Empirical test cost:   {test_metrics['cost']}")
+    print("\n=== Policy comparison (capacity = 100) ===")
+    print(policy_df.to_string(index=False))
 
     print("\\n=== Why Average Precision for model selection ===")
     print(
