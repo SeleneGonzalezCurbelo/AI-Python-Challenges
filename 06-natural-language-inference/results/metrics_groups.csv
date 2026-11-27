@@ -1,0 +1,7 @@
+split,model,accuracy,macro_f1
+random,Model A,0.9791666666666666,0.9791463017269469
+random,Model B,1.0,1.0
+random,Model C,0.9375,0.9369458128078817
+group,Model A,0.9333333333333333,0.9326599326599326
+group,Model B,1.0,1.0
+group,Model C,0.9,0.8976982097186701

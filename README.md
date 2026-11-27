@@ -18,6 +18,7 @@ Developed and tested with **Python 3.11.18** (NumPy 2.4.6, pandas 3.1.1, Matplot
 | 03 - Text Classification | In-template macro-F1 1.0000 both models; group-split drops to 0.4453 / 0.2229 |
 | 04 - Pathfinding | A* matches Dijkstra's cost (98) with 309 vs 322 explored nodes; replanning 568 vs 784 |
 | 05 - Neural Network From Scratch | Test F1 up to 0.9901; SGD/Adam converge faster than full-batch GD; gradient error < 1e-8 |
+| 06 - Natural Language Inference | Three approaches (Jaccard baseline, TF-IDF + Logistic Regression, multilingual transformer) for premise-hypothesis entailment, contradiction and neutral |
 
 ## Challenges
 
@@ -61,6 +62,16 @@ Implementation of a multilayer perceptron (MLP) from scratch using only NumPy to
 - Architecture study (`2-4-1`, `2-8-1`, `2-32-16-1`) and generalization-gap analysis
 - Non-linear decision boundary visualization and numerical gradient checking
 
+### 06-natural-language-inference
+Natural Language Inference (NLI) over Spanish premise-hypothesis pairs, classifying each pair as entailment, contradiction or neutral. Includes:
+- Reproducible synthetic dataset of documentation-style premise-hypothesis pairs
+- Model A: Jaccard lexical similarity baseline with thresholds and negation cues
+- Model B: TF-IDF + Logistic Regression over a joint representation of the pair
+- Model C: pretrained multilingual transformer fine-tuned for NLI
+- Evaluation with accuracy, macro-F1, confusion matrices and per-class reports
+- Group-based split by template and hand-written out-of-template pairs for generalization
+- RAG-style verification demo for generated answers against documentation premises
+
 ## Installation
 
 1. Clone the repository:
@@ -86,6 +97,7 @@ cd ../02-anomaly-detection && python solution.py && python solution_timeseries.p
 cd ../03-text-classification && python solution.py
 cd ../04-pathfinding-algorithms && python solution.py
 cd ../05-neural-network-from-scratch && python solution.py
+cd ../06-natural-language-inference && python solution.py
 ```
 
 All scripts resolve their `results/` directory relative to their own file, so they also work when invoked from another working directory. Detailed instructions are in each challenge's README.
@@ -117,6 +129,7 @@ All scripts resolve their `results/` directory relative to their own file, so th
 - [x] Challenge 03: Text Classification (BoW, TF-IDF)
 - [x] Challenge 04: Pathfinding Algorithms (Dijkstra, A*)
 - [x] Challenge 05: Neural Network From Scratch (MLP, NumPy, Backprop)
+- [ ] Challenge 06: Natural Language Inference (Jaccard, TF-IDF, Multilingual Transformer)
 
 ## Repository Structure
 
@@ -162,6 +175,15 @@ AI-Python-Challenges/
         ├── optimizer_comparison.png
         ├── optimizer_history.csv
         └── training_results.png
+└── 06-natural-language-inference/
+    ├── README.md
+    ├── solution.py
+    └── results/
+        ├── confusion_matrices.png
+        ├── metrics.csv
+        ├── metrics_groups.csv
+        ├── predictions.csv
+        └── verification_demo.csv
 ```
 
 Generated `results/` artifacts are tracked so the documented output is visible on GitHub. Python caches and other temporary files are ignored through `.gitignore`.

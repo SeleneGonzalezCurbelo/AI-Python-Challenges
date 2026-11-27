@@ -1,0 +1,49 @@
+premise,hypothesis,true_label,pred_model_a,pred_model_b,pred_model_c
+La plataforma permite exportar informes en formato Excel.,La plataforma no permite exportar informes en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite descargar informes en formato Excel.,La plataforma no permite descargar informes en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar documentos en formato Excel.,La plataforma permite exportar documentos en formato PDF.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite compartir documentos en formato PDF.,La plataforma permite compartir documentos en PDF.,entailment,entailment,entailment,entailment
+La plataforma permite exportar documentos en formato Excel.,La plataforma no permite exportar documentos en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite descargar informes en formato Excel.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite exportar informes en formato PDF.,Los usuarios con rol administrador pueden eliminar cuentas.,neutral,neutral,neutral,contradiction
+La plataforma permite compartir documentos en formato Excel.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite compartir documentos en formato Excel.,Se pueden compartir documentos en formato Excel.,entailment,entailment,entailment,entailment
+La plataforma permite exportar informes en formato PDF.,La plataforma permite exportar documentos PDF.,entailment,entailment,entailment,entailment
+La plataforma permite exportar informes en formato PDF.,Se pueden exportar informes en formato PDF.,entailment,entailment,entailment,entailment
+La plataforma permite descargar informes en formato PDF.,La plataforma permite gestionar usuarios.,neutral,neutral,neutral,neutral
+La plataforma permite descargar informes en formato Excel.,Se pueden descargar informes en formato Excel.,entailment,entailment,entailment,entailment
+La plataforma permite exportar documentos en formato PDF.,La plataforma no permite exportar documentos en formato PDF.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar informes en formato PDF.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite exportar documentos en formato Excel.,La plataforma no permite exportar documentos en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite descargar informes en formato Excel.,La plataforma permite exportar documentos Excel.,entailment,neutral,entailment,entailment
+La plataforma permite exportar documentos en formato PDF.,La plataforma permite gestionar usuarios.,neutral,neutral,neutral,neutral
+La plataforma permite compartir documentos en formato PDF.,La plataforma permite compartir documentos en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite compartir documentos en formato PDF.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite exportar informes en formato PDF.,La plataforma permite exportar documentos PDF.,entailment,entailment,entailment,entailment
+La plataforma permite exportar documentos en formato PDF.,La plataforma permite exportar documentos en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar informes en formato Excel.,La plataforma permite exportar documentos Excel.,entailment,entailment,entailment,entailment
+La plataforma permite compartir documentos en formato Excel.,La plataforma permite gestionar usuarios.,neutral,neutral,neutral,neutral
+La plataforma permite descargar informes en formato Excel.,La plataforma permite descargar informes en formato PDF.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar informes en formato Excel.,La plataforma permite exportar informes en formato PDF.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite descargar informes en formato PDF.,La plataforma permite descargar informes en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar documentos en formato Excel.,La plataforma permite exportar documentos Excel.,entailment,entailment,entailment,entailment
+La plataforma permite exportar informes en formato Excel.,La plataforma permite exportar documentos Excel.,entailment,entailment,entailment,entailment
+La plataforma permite descargar informes en formato Excel.,La plataforma permite descargar informes en Excel.,entailment,entailment,entailment,entailment
+La plataforma permite compartir documentos en formato PDF.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite exportar documentos en formato Excel.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite descargar informes en formato PDF.,Los usuarios con rol administrador pueden eliminar cuentas.,neutral,neutral,neutral,contradiction
+La plataforma permite compartir documentos en formato Excel.,La plataforma permite gestionar usuarios.,neutral,neutral,neutral,neutral
+La plataforma permite exportar documentos en formato PDF.,La plataforma permite exportar documentos PDF.,entailment,entailment,entailment,entailment
+La plataforma permite compartir documentos en formato PDF.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite exportar informes en formato Excel.,La plataforma permite exportar informes en Excel.,entailment,entailment,entailment,entailment
+La plataforma permite compartir documentos en formato PDF.,La plataforma no permite compartir documentos en formato PDF.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar informes en formato PDF.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite exportar informes en formato Excel.,La plataforma permite programar exportaciones automáticas.,neutral,neutral,neutral,neutral
+La plataforma permite compartir documentos en formato Excel.,Los usuarios con rol administrador pueden eliminar cuentas.,neutral,neutral,neutral,contradiction
+La plataforma permite exportar documentos en formato Excel.,La plataforma no permite exportar documentos en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar informes en formato Excel.,La plataforma permite exportar informes en Excel.,entailment,entailment,entailment,entailment
+La plataforma permite exportar documentos en formato Excel.,La plataforma permite exportar documentos en formato PDF.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar informes en formato Excel.,La plataforma no permite exportar informes en formato Excel.,contradiction,contradiction,contradiction,contradiction
+La plataforma permite exportar documentos en formato PDF.,Se pueden exportar documentos en formato PDF.,entailment,entailment,entailment,entailment
+La plataforma permite compartir documentos en formato Excel.,La plataforma permite compartir documentos en Excel.,entailment,entailment,entailment,entailment
+La plataforma permite descargar informes en formato PDF.,La plataforma no permite descargar informes en formato PDF.,contradiction,contradiction,contradiction,contradiction

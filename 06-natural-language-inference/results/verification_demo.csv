@@ -1,0 +1,4 @@
+claim,best_premise,nli_label,verification_status
+La plataforma permite exportar documentos PDF,"La plataforma permite exportar informes en formato PDF, pero no en Excel.",entailment,supported
+La plataforma permite exportar informes en Excel,"La plataforma permite exportar informes en formato PDF, pero no en Excel.",contradiction,contradicted
+La plataforma permite programar exportaciones automáticas,"La plataforma permite exportar informes en formato PDF, pero no en Excel.",neutral,insufficient_evidence
