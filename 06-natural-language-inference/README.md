@@ -60,6 +60,16 @@ A random split mixes paraphrases of the same template across train and test. A `
 6. **Generalization Analysis**: group-based split by template and hand-written out-of-template pairs.
 7. **RAG Verification Demo**: classify each claim of a generated answer against the most relevant documentation premise.
 
+## Reusable RAG Verifier
+
+The solution also exposes a reusable helper:
+
+```python
+verificar_respuesta(contexto, respuesta, threshold=0.80) -> dict
+```
+
+It splits the answer into individual claims, retrieves the most relevant evidence for each claim, runs NLI, and returns the global relation, model scores, and an operational decision (`aceptar`, `revisar` or `abstenerse`).
+
 ## Results
 
 The script trains and evaluates all three models on the same partitions and prints:
@@ -71,6 +81,8 @@ The script trains and evaluates all three models on the same partitions and prin
 - A small RAG verification table (`supported`, `contradicted`, `insufficient_evidence`).
 
 Artifacts are saved under `results/`:
+
+![Confusion matrices](results/confusion_matrices.png)
 
 - `results/metrics.csv`
 - `results/metrics_groups.csv`

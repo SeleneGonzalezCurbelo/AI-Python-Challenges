@@ -119,6 +119,9 @@ All scripts resolve their `results/` directory relative to their own file, so th
 
 ### Challenge 05: Neural Network From Scratch
 ![Training](05-neural-network-from-scratch/results/training_results.png)
+
+### Challenge 06: Natural Language Inference
+![Confusion matrices](06-natural-language-inference/results/confusion_matrices.png)
 ![Optimizer comparison](05-neural-network-from-scratch/results/optimizer_comparison.png)
 ![Architecture comparison](05-neural-network-from-scratch/results/architecture_comparison.png)
 

@@ -243,6 +243,142 @@ def save_confusion_matrices(results_by_model):
     plt.close(fig)
 
 
+_VERIFIER_CACHE = {}
+
+
+def _get_verifier_transformer():
+    """Load (or reuse) the transformer used by verificar_respuesta."""
+    if "tokenizer" in _VERIFIER_CACHE:
+        return (
+            _VERIFIER_CACHE["tokenizer"],
+            _VERIFIER_CACHE["model"],
+            _VERIFIER_CACHE["device"],
+        )
+
+    if "transformer_model" in globals() and globals().get("transformer_model") is not None:
+        tokenizer = globals()["tokenizer"]
+        model = globals()["transformer_model"]
+        device = globals()["device"]
+    else:
+        tokenizer, model, device = load_transformer()
+
+    _VERIFIER_CACHE["tokenizer"] = tokenizer
+    _VERIFIER_CACHE["model"] = model
+    _VERIFIER_CACHE["device"] = device
+    return tokenizer, model, device
+
+
+def _split_sentences(text: str):
+    parts = re.split(r"(?<=[.!?])\s+", text.strip())
+    return [part.strip() for part in parts if part.strip()]
+
+
+def verificar_respuesta(contexto: str, respuesta: str, threshold: float = 0.80) -> dict:
+    """Verify a generated answer against retrieved documentation.
+
+    The answer is split into individual claims. Each claim retrieves its best
+    evidence sentence from ``contexto`` and is classified with the NLI model.
+    The returned decision is one of: ``aceptar``, ``revisar``, ``abstenerse``.
+    """
+    premises = _split_sentences(contexto)
+    claims = _split_sentences(respuesta)
+    if not premises:
+        premises = [contexto.strip()] if contexto.strip() else [""]
+    if not claims:
+        claims = [respuesta.strip()] if respuesta.strip() else [""]
+
+    tokenizer, model, device = _get_verifier_transformer()
+
+    claim_results = [
+        _verify_single_claim(claim, premises, tokenizer, model, device)
+        for claim in claims
+    ]
+    all_scores = [item["scores"] for item in claim_results]
+
+    aggregated_scores = {
+        label: float(np.mean([scores[label] for scores in all_scores]))
+        for label in LABELS
+    }
+    overall_relation = _aggregate_relation(claim_results)
+    decision = _decide_verification(claim_results, threshold)
+
+    result = {
+        "relation": overall_relation,
+        "relacion": overall_relation,
+        "scores": aggregated_scores,
+        "puntuaciones": aggregated_scores,
+        "decision": decision,
+        "decision_operativa": decision,
+        "threshold": threshold,
+        "claims": claim_results,
+    }
+    return result
+
+
+def _verify_single_claim(claim, premises, tokenizer, model, device):
+    best_premise = max(premises, key=lambda p, c=claim: jaccard(p, c))
+
+    encoding = tokenizer(
+        [best_premise],
+        [claim],
+        padding=True,
+        truncation=True,
+        max_length=128,
+        return_tensors="pt",
+    )
+    encoding = {key: value.to(device) for key, value in encoding.items()}
+    with torch.no_grad():
+        logits = model(**encoding).logits
+    probs = torch.softmax(logits, dim=-1).cpu().tolist()[0]
+
+    score_map = {}
+    for idx, prob in enumerate(probs):
+        raw = str(model.config.id2label[idx]).lower()
+        if "entail" in raw:
+            score_map["entailment"] = prob
+        elif "contrad" in raw:
+            score_map["contradiction"] = prob
+        else:
+            score_map["neutral"] = prob
+    for label in LABELS:
+        score_map.setdefault(label, 0.0)
+
+    predicted = max(score_map, key=score_map.get)
+    return {
+        "claim": claim,
+        "evidence": best_premise,
+        "relation": predicted,
+        "scores": score_map,
+    }
+
+
+def _aggregate_relation(claim_results):
+    if any(item["relation"] == "contradiction" for item in claim_results):
+        return "contradiction"
+    if all(item["relation"] == "entailment" for item in claim_results):
+        return "entailment"
+    return "neutral"
+
+
+def _decide_verification(claim_results, threshold):
+    has_contradiction = any(
+        item["relation"] == "contradiction" for item in claim_results
+    )
+    all_entailment = all(
+        item["relation"] == "entailment" for item in claim_results
+    )
+    min_entailment = min(
+        (item["scores"].get("entailment", 0.0) for item in claim_results),
+        default=0.0,
+    )
+
+    if has_contradiction:
+        return "revisar"
+    if all_entailment and min_entailment >= threshold:
+        return "aceptar"
+    return "abstenerse"
+
+
 def rag_verification_demo(tokenizer, model, device):
     knowledge_base = [
         "La plataforma permite exportar informes en formato PDF, pero no en Excel.",
